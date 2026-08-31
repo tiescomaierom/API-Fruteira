@@ -8,7 +8,7 @@ namespace API_Fruteira.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "penis", "Scorching"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
