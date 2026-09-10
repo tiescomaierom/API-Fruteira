@@ -46,22 +46,13 @@ INSERT INTO Produtos (nome,descricao,preco,estoque,ativo)
 VALUES ('Uva','Roxo',9.95, 60 ,1)
  
 
-CREATE TABLE Clientes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    telefone VARCHAR(20),
-    cpf VARCHAR(14) UNIQUE,
-    endereco VARCHAR(200),
-    cidade VARCHAR(100),
-    estado CHAR(2)
 );
-
 CREATE TABLE Fruta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     cor VARCHAR(30),
     preco DECIMAL(10,2)
+
 );
 
 INSERT INTO Fruta (nome, cor, preco) 
