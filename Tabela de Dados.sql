@@ -69,7 +69,7 @@ VALUES ('Mamão','Laranja',1.50);
 
 INSERT INTO Fruta (nome,cor,preco)
 VALUES ('Uva','Roxo',1.50);
-Select * From  Fruta
+
 
 CREATE TABLE Produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
