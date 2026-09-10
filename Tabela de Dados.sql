@@ -19,56 +19,6 @@ VALUES ('Mamão','Laranja',1.50);
 
 INSERT INTO Fruta (nome,cor,preco)
 VALUES ('Uva','Roxo',1.50);
-Select * From  Fruta
-
-CREATE TABLE Produtos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(150) NOT NULL,
-    descricao TEXT,
-    preco DECIMAL(10,2) NOT NULL,
-    estoque INT NOT NULL DEFAULT 0,
-    ativo BOOLEAN NOT NULL DEFAULT TRUE
-);
-
-INSERT INTO Produtos (nome,descricao,preco,estoque,ativo)
-VALUES ('Banana','Amarela',6.50, 60,1)
-
-INSERT INTO Produtos (nome,descricao,preco,estoque,ativo)
-VALUES ('Morango','Vermelho',12.50, 80,1)
-
-INSERT INTO Produtos (nome,descricao,preco,estoque,ativo)
-VALUES  ('Macã','Vermelho',5.50, 50, 1)
-
-INSERT INTO Produtos (nome,descricao,preco,estoque,ativo)
-VALUES ('Mamão','Laranaja',8.50 ,70,1)
-
-INSERT INTO Produtos (nome,descricao,preco,estoque,ativo)
-VALUES ('Uva','Roxo',9.95, 60 ,1)
- 
-
-);
-CREATE TABLE Fruta (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    cor VARCHAR(30),
-    preco DECIMAL(10,2)
-
-);
-
-INSERT INTO Fruta (nome, cor, preco) 
-VALUES ('Banana', 'Amarelo',1.50);
-
-INSERT INTO Fruta (nome,cor, preco)
-VALUES ('Morango','Vermelho',1.50);
-
-INSERT INTO Fruta (nome,cor,preco)
-VALUES ('Macã','Vermelho',1.50);
-
-INSERT INTO Fruta (nome,cor,preco)
-VALUES ('Mamão','Laranja',1.50);
-
-INSERT INTO Fruta (nome,cor,preco)
-VALUES ('Uva','Roxo',1.50);
 
 
 CREATE TABLE Produtos (
@@ -95,6 +45,10 @@ VALUES ('Mamão','Laranaja',8.50 ,70,1)
 INSERT INTO Produtos (nome,descricao,preco,estoque,ativo)
 VALUES ('Uva','Roxo',9.95, 60 ,1)
  
+
+);
+
+
 
 CREATE TABLE Clientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
