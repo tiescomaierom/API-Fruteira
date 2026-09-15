@@ -1,68 +1,22 @@
 
-
-CREATE TABLE Fruta (
+CREATE TABLE Categorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    cor VARCHAR(30),
-preco DECIMAL(10,2)
+    nome VARCHAR(100) NOT NULL,
+    descricao VARCHAR(255)
 );
 
-INSERT INTO Fruta (nome, cor, preco) 
-VALUES ('Banana', 'Amarelo',1.50);
-
-INSERT INTO Fruta (nome, cor, preco)
-VALUES ('Morango','Vermelho',1.50);
-
-INSERT INTO Fruta (nome, cor, preco)
-VALUES ('Macã','Vermelho',1.50);
-
-INSERT INTO Fruta (nome, cor, preco)
-VALUES ('Mamão','Laranja',1.50);
-
-INSERT INTO Fruta (nome, cor, preco)
-VALUES ('Uva','Roxo',1.50);
-Select* From  Fruta
 
 CREATE TABLE Produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    categoria_id INT,
     nome VARCHAR(150) NOT NULL,
     descricao TEXT,
     preco DECIMAL(10,2) NOT NULL,
     estoque INT NOT NULL DEFAULT 0,
-    ativo BOOLEAN NOT NULL DEFAULT TRUE
+    ativo BOOLEAN NOT NULL DEFAULT TRUE,
+    CONSTRAINT fk_produtos_categoria FOREIGN KEY (categoria_id) REFERENCES Categorias(id)
 );
 
-INSERT INTO Produtos (nome, descricao, preco, estoque, ativo)
-VALUES ('Banana','Amarela',6.50, 60,1)
-
-INSERT INTO Produtos (nome, descricao, preco, estoque, ativo)
-VALUES ('Morango','Vermelho',12.50, 80,1)
-
-INSERT INTO Produtos (nome, descricao, preco, estoque, ativo)
-VALUES  ('Macã','Vermelho',5.50, 50, 1)
-
-INSERT INTO Produtos (nome, descricao, preco, estoque, ativo)
-VALUES ('Mamão','Laranaja',8.50 ,70,1)
-
-INSERT INTO Produtos (nome, descricao, preco, estoque, ativo)
-VALUES ('Uva','Roxo',9.95, 60 ,1)
-  
-
-INSERT INTO Produtos (nome, descricao, preco, estoque, ativo)
-VALUES ('Manga','Amarela',6.50, 60,1)
-
-INSERT INTO Produtos (nome, descricao, preco, estoque, ativo)
-VALUES ('Bergamota','laranja',12.50, 80,1)
-
-INSERT INTO Produtos (nome, descricao, preco, estoque, ativo)
-VALUES  ('Laranja','laranja',5.50, 50, 1)
-
-INSERT INTO Produtos (nome, descricao, preco, estoque, ativo)
-VALUES ('Pera','verde',8.50 ,70,1)
-
-INSERT INTO Produtos (nome, descricao, preco, estoque, ativo)
-VALUES ('Melancia','verde',9.95, 60 ,1)
-  
 
 CREATE TABLE Clientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -72,74 +26,100 @@ CREATE TABLE Clientes (
     cpf VARCHAR(14) UNIQUE,
     endereco VARCHAR(200),
     cidade VARCHAR(100),
-estado CHAR(2)
+    estado CHAR(2)
 );
 
 
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Anderson','anderson@gmail.com','999886585','24156987152','Faxinal','santa cruz do sul','rs')
+CREATE TABLE Vendas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    data_venda DATETIME DEFAULT CURRENT_TIMESTAMP,
+    valor_total DECIMAL(10,2) DEFAULT 0.00,
+    FOREIGN KEY (cliente_id) REFERENCES Clientes(id)
+);
 
 
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Pedro','pedro@gmail.com','999875624','36952345685','Faxinal','santa cruz do sul','rs')
+CREATE TABLE Itens_Venda (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    venda_id INT NOT NULL,
+    produto_id INT NOT NULL,
+    quantidade INT NOT NULL,
+    preco_unitario DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (venda_id) REFERENCES Vendas(id),
+    FOREIGN KEY (produto_id) REFERENCES Produtos(id)
+);
 
 
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Gustavo','gustavo@gmail.com','999885632','21459874565','Faxinal','santa cruz do sul','rs')
+
+INSERT INTO Categorias (nome, descricao) VALUES
+('Frutas Tropicais', 'Frutas de regiões quentes'),
+('Frutas Cítricas', 'Ricas em vitamina C e ácidas'),
+('Frutas Vermelhas', 'Pequenas, doces ou levemente ácidas'),
+('Frutas de Época', 'Produção sazonal'),
+('Frutas Importadas', 'Itens vindos do exterior'),
+('Frutas Secas', 'Desidratadas ou oleaginosas'),
+('Frutas Nacionais', 'Produzidas no mercado interno'),
+('Orgânicos', 'Cultivados sem defensivos agrícolas'),
+('Hortaliças e Legumes', 'Verduras e complementos'),
+('Polpas e Sucos', 'Derivados de frutas');
 
 
-INSERT INTO Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Gabriel','gabriel@gmail.com','999887564','24156987412','santa vitoria','santa cruz do sul','rs')
+INSERT INTO Produtos (nome, descricao, preco, estoque, ativo, categoria_id) VALUES
+('Banana', 'Amarela', 6.50, 60, 1, 1),
+('Morango', 'Vermelho', 12.50, 80, 1, 3),
+('Maçã', 'Vermelho', 5.50, 50, 1, 7),
+('Mamão', 'Laranja', 8.50, 70, 1, 1),
+('Uva', 'Roxo', 9.95, 60, 1, 3),
+('Manga', 'Amarela', 6.50, 60, 1, 1),
+('Bergamota', 'Laranja', 12.50, 80, 1, 2),
+('Laranja', 'Laranja', 5.50, 50, 1, 2),
+('Pera', 'Verde', 8.50, 70, 1, 7),
+('Melancia', 'Verde', 9.95, 60, 1, 7);
+
+INSERT INTO Clientes (nome, email, telefone, cpf, endereco, cidade, estado) VALUES
+('Anderson', 'anderson@gmail.com', '999886585', '24156987152', 'Faxinal', 'santa cruz do sul', 'RS'),
+('Pedro', 'pedro@gmail.com', '999875624', '36952345685', 'Faxinal', 'santa cruz do sul', 'RS'),
+('Gustavo', 'gustavo@gmail.com', '999885632', '21459874565', 'Faxinal', 'santa cruz do sul', 'RS'),
+('Gabriel', 'gabriel@gmail.com', '999887564', '24156987412', 'santa vitoria', 'santa cruz do sul', 'RS'),
+('Eduardo', 'eduardo@gmail.com', '999856446', '25634985210', 'santa vitoria', 'santa cruz do sul', 'RS'),
+('Maria', 'maria@gmail.com', '999996659', '2569874695', 'hauber', 'santa cruz do sul', 'RS'),
+('Eduarda', 'eduarda@gmail.com', '999663328', '2415879456', 'hauber', 'santa cruz do sul', 'RS'),
+('Adriana', 'adriana@gmail.com', '999856329', '25698764532', 'centro', 'santa cruz do sul', 'RS'),
+('Daniela', 'daniela@gmail.com', '999452541', '25498761325', 'centro', 'santa cruz do sul', 'RS'),
+('Ana', 'ana@gmail.com', '999666688', '24198745962', 'centro', 'santa cruz do sul', 'RS'),
+('Daniel', 'daniel@gmail.com', '999875624', '66952345685', 'Faxinal', 'santa cruz do sul', 'RS'),
+('Osmar', 'osmar@gmail.com', '999985632', '21450874565', 'Faxinal', 'santa cruz do sul', 'RS'),
+('Jonas', 'jonas@gmail.com', '999887564', '24156967412', 'santa vitoria', 'santa cruz do sul', 'RS'),
+('Cleverson', 'cleverson@gmail.com', '999856446', '25634945210', 'santa vitoria', 'santa cruz do sul', 'RS'),
+('Mariana', 'mariana@gmail.com', '999996659', '2589874695', 'hauber', 'santa cruz do sul', 'RS'),
+('Gilnei', 'gilnei@gmail.com', '999663328', '2415870456', 'hauber', 'santa cruz do sul', 'RS'),
+('Adriano', 'adriano@gmail.com', '999856329', '25698768532', 'centro', 'santa cruz do sul', 'RS'),
+('Arthur', 'florzinha@gmail.com', '999452541', '25498769325', 'centro', 'santa cruz do sul', 'RS'),
+('André', 'andre@gmail.com', '999666688', '24198755962', 'centro', 'santa cruz do sul', 'RS');
 
 
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Eduardo','eduardo@gmail.com','999856446','25634985210','santa vitoria','santa cruz do sul','rs')
+INSERT INTO Vendas (cliente_id, valor_total) VALUES
+(1, 13.00),
+(2, 25.00),
+(3, 11.00),
+(4, 17.00),
+(5, 19.90),
+(6, 12.50),
+(7, 24.00),
+(8, 9.95),
+(9, 8.50),
+(10, 15.45);
 
 
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Maria','maria@gmail.com','999996659','2569874695','hauber','santa cruz do sul', 'rs')
-
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Eduarda','eduarda@gmail.com','999663328','2415879456','hauber','santa cruz do sul','rs')
-
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Adriana','adriana@gmail.com','999856329','25698764532','centro','santa cruz do sul','rs')
-
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES  ('Daniela','daniela@gmail.com','999452541','25498761325','centro','santa cruz do sul','rs')
-
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Ana','ana@gmail.com','999666688','24198745962','centro','santa cruz do sul', 'rs')
-
-INSERT INTO Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Daniel','daniel@gmail.com','999875624','66952345685','Faxinal','santa cruz do sul','rs')
-
-
-INSERT INTO Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Osmar','osmar@gmail.com','999985632','21450874565','Faxinal','santa cruz do sul','rs')
-
-
-INSERT INTO Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Jonas','jonas@gmail.com','999887564','24156967412','santa vitoria','santa cruz do sul','rs')
-
-INSERT INTO Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Cleverson','cleverson@gmail.com','999856446','25634945210','santa vitoria','santa cruz do sul','rs')
-
-
-INSERT INTO Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Mariana','mariana@gmail.com','999996659','2589874695','hauber','santa cruz do sul', 'rs')
-
-INSERT INTO Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Gilnei','gilnei@gmail.com','999663328','2415870456','hauber','santa cruz do sul','rs')
-
-INSERT INTO Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('Adriano','adriano@gmail.com','999856329','25698768532','centro','santa cruz do sul','rs')
-
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES  ('Arthur','florzinha@gmail.com','999452541','25498769325','centro','santa cruz do sul','rs')
-
-INSERT INTO  Clientes (nome, email, telefone, cpf, endereco, cidade, estado)
-VALUES ('André','andre@gmail.com','999666688','24198755962','centro','santa cruz do sul', 'rs')
-
-SELECT *FROM Produtos;
-
+INSERT INTO Itens_Venda (venda_id, produto_id, quantidade, preco_unitario) VALUES
+(1, 1, 2, 6.50),   
+(2, 2, 2, 12.50),  
+(3, 3, 2, 5.50),   
+(4, 4, 2, 8.50),   
+(5, 5, 2, 9.95),   
+(6, 7, 1, 12.50), 
+(7, 8, 3, 5.50),   
+(7, 9, 1, 8.50),   
+(8, 10, 1, 9.95),  
+(9, 9, 1, 8.50),   
+(10, 6, 1, 6.50);
