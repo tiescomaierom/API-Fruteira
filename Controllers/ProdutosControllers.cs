@@ -67,6 +67,10 @@ namespace API_Fruteira.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Excluir(int id)
         {
+            
+            await _connection.ExecuteAsync("DELETE FROM Itens_Venda WHERE produto_id = @Id", new { Id = id });
+
+     
             var sql = "DELETE FROM Produtos WHERE id = @Id";
             var linhasAfetadas = await _connection.ExecuteAsync(sql, new { Id = id });
 
